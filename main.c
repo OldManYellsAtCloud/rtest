@@ -8,7 +8,12 @@
 
 int main(int argc, char *argv[])
 {
-    int fd = open("/dev/input/event2", O_RDWR);
+    int fd;
+
+    if (argc > 1)
+        fd = open(argv[1], O_RDWR);
+    else
+        fd = open("/dev/input/event2", O_RDWR);
 
     struct ff_effect ffe;
     struct input_event play;
