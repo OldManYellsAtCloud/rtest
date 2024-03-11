@@ -6,6 +6,9 @@
 #include <linux/input.h>
 #include <time.h>
 
+#include <errno.h>
+#include <string.h>
+
 int main(int argc, char *argv[])
 {
     int fd;
@@ -13,7 +16,7 @@ int main(int argc, char *argv[])
     if (argc > 1)
         fd = open(argv[1], O_RDWR);
     else
-        fd = open("/dev/input/event2", O_RDWR);
+        fd = open("/dev/input/by-path/platform-vibrator-event", O_RDWR);
 
     struct ff_effect ffe;
     struct input_event play;
@@ -30,7 +33,9 @@ int main(int argc, char *argv[])
     ffe.u.periodic.custom_len = 500;
     ffe.u.periodic.waveform = FF_SQUARE;
 
-    ioctl(fd, EVIOCSFF, &ffe);
+    int ret = ioctl(fd, EVIOCSFF, &ffe);
+    if (ret != 0)
+        printf("ioctl failed: %d, %s\n", errno, strerror(errno));
 
     play.code = ffe.id;
     play.type = EV_FF;
