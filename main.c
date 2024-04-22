@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
     play.code = ffe.id;
     play.type = EV_FF;
-    play.value = 3;
+    play.value = 1;
 
     stop.code = ffe.id;
     stop.type = EV_FF;
