@@ -32,6 +32,9 @@ int main(int argc, char *argv[])
     ffe.id = -1;
     ffe.u.periodic.custom_len = 500;
     ffe.u.periodic.waveform = FF_SQUARE;
+    ffe.u.periodic.period = 50000;
+    ffe.u.periodic.magnitude = -1;
+    ffe.u.periodic.phase = 35000;
 
     int ret = ioctl(fd, EVIOCSFF, &ffe);
     if (ret != 0)
